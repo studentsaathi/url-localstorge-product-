@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #counter{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="count"></div>
+    <div id="counter">
+        
+    </div>
+</body>
+</html>
+
+<script>
+
+
+
+
+    var data = JSON.parse(localStorage.getItem("Products"))
+
+    let count = document.querySelector("#count")
+    count.innerText = `Total Products Added: ${data.length}`
+
+    data.map(function(elem,index){
+        
+        //console.log(data.length)
+        var counter = document.getElementById("counter")
+
+        var box = document.createElement("div")
+
+        var image = document.createElement("img")
+        image.src = elem.image
+
+        let name = document.createElement("p")
+        name.innerText = elem.name
+
+        let cate = document.createElement("p")
+        cate.innerText = elem.category
+
+        let gender = document.createElement("p")
+        gender.innerText = elem.gender
+
+        let sold = document.createElement("button");
+        sold.setAttribute("id","sold")
+        sold.addEventListener("click",soldButton)
+        sold.innerText = "Sold"
+
+        let display = document.createElement("p")
+        display.innerText = "Sold : False"
+
+        var btn = document.createElement("button")
+        btn.innerText= "remove"
+        btn.addEventListener("click", function(){
+            removeItems(elem,index)
+        })
+
+        box.append(image,name,cate,gender,display,sold,btn)
+        counter.append(box)
+        
+        function soldButton(){
+            //console.log("okay",sold.innerText)
+            if (display.innerText==="Sold : False"){
+                display.innerText="Sold : True"
+                display.style.color = "red"
+            }else{
+                display.innerText="Sold : False"
+                display.style.color = "green"
+            }
+        }
+    })
+
+
+    function removeItems(elem,index){
+        //console.log(data)
+        data.splice(index,1)
+        localStorage.setItem("Products",JSON.stringify(data))
+        window.location.reload()
+    }
+
+    
+    
+</script>

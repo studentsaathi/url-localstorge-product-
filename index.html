@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #form>input {
+            margin: 15px;
+        }
+
+        select,div{
+            margin: 15px;
+        }
+
+        #sold{
+            color: green;
+            cursor: pointer;
+        }
+        #fff{
+            height: auto;
+            width: 40%;
+            border: 2px solid red;
+            background-color: aquamarine;
+            text-align: center;
+            margin: auto;
+            
+        }
+      
+    </style>
+</head>
+<body>
+  
+   <div id="fff">
+    <h1> Admin Panel Dashboard</h1>
+    <button><a href="product.html">Check Added Product</a></button>
+    <form onsubmit="storeProduct(event)" id="form">
+        <input type="text" id="name" placeholder="Enter name"><br>
+        <input type="text" id="category" placeholder="Enter category"><br>
+        <input type="text" id="image" placeholder="Enter image_url"><br>
+        <input type="number" id="price" placeholder="Enter price"><br>
+        <select name="gender" id="gender">
+            <option value="">---</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+        <div id="sold" >Sold : False</div>
+        <input type="submit" id="add">
+    </form>
+   </div>
+</body>
+</html>
+
+<script>
+
+
+    let arr = JSON.parse(localStorage.getItem("Products")) ||[]
+
+    function Product(n,c,i,p,g,b){
+        this.name = n,
+        this.category = c,
+        this.image = i,
+        this.price = p,
+        this.gender = g,
+        this.sold = b
+    }
+
+    let sold = document.querySelector("#sold");
+    sold.addEventListener("click",soldButton)
+
+
+    function storeProduct(e){
+        e.preventDefault()
+
+        let form = document.getElementById("form")
+
+        let name = form.name.value
+
+        let category = form.category.value
+
+        let image = form.image.value
+
+        let price = form.price.value
+
+        let gender = form.gender.value
+
+    
+        let product = new Product(name,category,image,price,gender);
+
+        arr.push(product)
+
+        //console.log(arr)
+
+        localStorage.setItem("Products", JSON.stringify(arr))
+    }
+
+    function soldButton(){
+            //console.log("okay",sold.innerText)
+            if (sold.innerText==="Sold : False"){
+                sold.innerText="Sold : True"
+                sold.style.color = "red"
+            }else{
+                sold.innerText="Sold : False"
+                sold.style.color = "green"
+            }
+        }
+
+
+</script>
